@@ -1,1 +1,1 @@
-# Products Management with Vue Js 3
+# Products Management App with Vue.js 3
