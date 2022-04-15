@@ -23,7 +23,7 @@
 				<div class="row mb-3">
 					<div class="col">						
 						<!-- Button trigger modal -->
-						<button type="button" class="btn btn-primary" @click="showModal">
+						<button type="button" class="btn btn-primary" @click="add">
 							<i class="fas fa-circle-plus me-2"></i>Add New
 						</button>
 					</div>
@@ -44,7 +44,7 @@
 						<div class="modal-dialog">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h5 class="modal-title" id="productModalLabel">New Product</h5>
+									<h5 class="modal-title" id="productModalLabel">{{ modalTitle }}</h5>
 									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 								</div>
 								<div class="modal-body">
@@ -67,7 +67,7 @@
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-									<button type="button" class="btn btn-primary" @click="save">Save changes</button>
+									<button type="button" class="btn btn-primary" @click="saveOrUpdate">{{ textButton }}</button>
 								</div>
 							</div>
 						</div>
@@ -80,6 +80,7 @@
 							<th @click="sort('name')" :class="classes('name')">Product Name</th>
 							<th @click="sort('category')" :class="classes('category')">Category</th>
 							<th @click="sort('price')" :class="classes('price')">Price</th>
+							<th>Action</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -87,6 +88,10 @@
 							<td>{{ product.name }}</td>
 							<td>{{ product.category }}</td>
 							<td>{{ product.price }}</td>
+							<td>
+								<button type="button" class="btn btn-sm btn-outline-secondary" @click="edit(product)"><i class="fas fa-edit"></i></button>
+								<button type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-circle-xmark"></i></button>
+							</td>
 						</tr>
 					</tbody>
 				</table>

@@ -198,7 +198,8 @@ export default {
 				category: "",
 				price: ""
 			},
-			productModal: null
+			productModal: null,
+			isEdit: false
 		};
 	},
 
@@ -255,6 +256,12 @@ export default {
 							else if (a > b) return 1;
 							else return 0;
 						})
+		},
+		modalTitle() {
+			return this.isEdit ? 'Edit Product' : 'Add New Product';
+		},
+		textButton() {
+			return this.isEdit ? 'Update' : 'Save';
 		}
 	},
 
@@ -289,6 +296,13 @@ export default {
 			this.productModal = new bootstrap.Modal(this.$refs.vueModal);
 			this.productModal.show();
 		},
+		saveOrUpdate() {
+			if (this.isEdit) {
+				this.update();
+			} else {
+				this.save();
+			}
+		},	
 		save() {
 			if (this.product.name && this.product.category && this.product.price) {
 				this.product.id = this.products.length + 1;
@@ -303,6 +317,31 @@ export default {
 			} else {
 				alert('Please input form properly');
 			}
+		},
+		add() {
+			this.isEdit = false;
+			this.product = {
+				id: null,
+				name: "",
+				category: "",
+				price: ""
+			};
+			this.showModal();
+		},
+		edit(product) {
+			this.product = Object.assign({}, product);
+			this.isEdit = true;
+			if (this.productModal !== null) {
+				this.productModal.show();
+			} else {
+				this.showModal();
+			}
+		},
+		update() {
+			let index = this.products.findIndex(item => item.id === this.product.id);
+			this.products.splice(index, 1, this.product);
+			this.isEdit = false;
+			this.productModal.hide();
 		}
 	},
 };
