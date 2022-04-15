@@ -286,7 +286,7 @@ export default {
 			this.currentPage = page;
 		},
 		showModal() {
-			this.productModal = new bootstrap.Modal(document.getElementById('productModal'));
+			this.productModal = new bootstrap.Modal(this.$refs.vueModal);
 			this.productModal.show();
 		},
 		save() {
@@ -299,7 +299,7 @@ export default {
 					category: "",
 					price: ""
 				};
-				this.$refs.vueModal.hide();
+				this.productModal.hide();
 			} else {
 				alert('Please input form properly');
 			}
