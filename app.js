@@ -17,11 +17,12 @@ export default {
 			product: {
 				id: null,
 				name: "",
-				category: "",
+				category_id: null,
 				price: ""
 			},
 			productModal: null,
-			isEdit: false
+			isEdit: false,
+			errors: {}
 		};
 	},
 
@@ -89,22 +90,14 @@ export default {
 					.then(response => {
 						// handle success
 						this.products = response.data.data;
-					})
-					.catch(function (error) {
-						// handle error
-						console.log(error);
-					})
+					});
 		},
 		fetchCategories() {
 			axios.get('/category')
 					.then(response => {
 						// handle success
 						this.categories = response.data.data;
-					})
-					.catch(function (error) {
-						// handle error
-						console.log(error);
-					})
+					});
 		},
 		sort(column) {
 			this.order.column = column;
@@ -144,19 +137,21 @@ export default {
 			}
 		},	
 		save() {
-			if (this.product.name && this.product.category && this.product.price) {
-				this.product.id = this.products.length + 1;
-				this.products.unshift(this.product);
-				this.product = {
-					id: null,
-					name: "",
-					category: "",
-					price: ""
-				};
-				this.productModal.hide();
-			} else {
-				alert('Please input form properly');
-			}
+			axios.post('/product', this.product)
+				.then(response => {
+					this.products.unshift(response.data.data);
+					this.product = {
+						id: null,
+						name: "",
+						category: null,
+						price: ""
+					};
+					this.errors = {};
+					this.productModal.hide();
+				})
+				.catch(error => {
+					this.errors = error.response.data.errors;
+				})
 		},
 		add() {
 			this.isEdit = false;

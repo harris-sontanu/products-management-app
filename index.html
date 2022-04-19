@@ -51,17 +51,20 @@
 									<form>
 										<div class="mb-3">
 											<label class="form-label">Product Name</label>
-											<input type="text" v-model="product.name" class="form-control">
+											<input type="text" v-model="product.name" class="form-control" :class="{ 'is-invalid': errors.name }">
+											<span class="invalid-feedback" v-if="errors.name">{{ errors.name[0] }}</span>
 										</div>
 										<div class="mb-3">
 											<label class="form-label">Category</label>
-											<select class="form-select" v-model="product.category">
+											<select class="form-select" v-model="product.category_id" :class="{ 'is-invalid': errors.category_id }">
 												<option v-for="category in categories" :value="category.id">{{ category.name }}</option>
 											</select>
+											<span class="invalid-feedback" v-if="errors.category_id">{{ errors.category_id[0] }}</span>
 										</div>
 										<div class="mb-3">
 											<label class="form-label">Price ($)</label>
-											<input type="number" v-model="product.price" class="form-control">
+											<input type="number" v-model="product.price" class="form-control" :class="{ 'is-invalid': errors.price }">										
+											<span class="invalid-feedback" v-if="errors.price">{{ errors.price[0] }}</span>
 										</div>
 									</form>
 								</div>
