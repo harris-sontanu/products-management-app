@@ -173,13 +173,22 @@ export default {
 			}
 		},
 		update() {
-			let index = this.products.findIndex(item => item.id === this.product.id);
-			this.products.splice(index, 1, this.product);
-			this.isEdit = false;
-			this.productModal.hide();
+			axios.put('/product/' + this.product.id, this.product)
+				.then(response => {
+					let index = this.products.findIndex(item => item.id === this.product.id);
+					this.products.splice(index, 1, response.data.data);
+					this.isEdit = false;
+					this.errors = {};
+					this.productModal.hide();
+				})
+				.catch(error => {
+					this.errors = error.response.data.errors;
+				})
+			
 		},
 		remove(product) {
 			if (confirm('Are you sure?')) {
+				axios.
 				let index = this.products.findIndex(item => item.id === product.id);
 				this.products.splice(index, 1);
 			}
