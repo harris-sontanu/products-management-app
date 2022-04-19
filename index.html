@@ -56,7 +56,7 @@
 										<div class="mb-3">
 											<label class="form-label">Category</label>
 											<select class="form-select" v-model="product.category">
-												<option v-for="category in categories" :value="category">{{ category }}</option>
+												<option v-for="category in categories" :value="category.id">{{ category.name }}</option>
 											</select>
 										</div>
 										<div class="mb-3">

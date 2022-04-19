@@ -4,6 +4,7 @@ export default {
 	data() {
 		return {
 			products: [],
+			categories: [],
 			order: {
 				dir: 1,
 				column: "name",
@@ -26,6 +27,7 @@ export default {
 
 	mounted: function() {
 		this.fetchProducts();
+		this.fetchCategories();
 	},
 
 	computed: {
@@ -73,15 +75,6 @@ export default {
 		pages() {
 			return Math.ceil(this.productsFiltered.length / this.perPage);
 		},
-		categories() {
-			let categories = this.products.map(el => el.category);
-			return Array.from(new Set(categories))
-						.sort((a, b) => {
-							if (a < b) return -1;
-							else if (a > b) return 1;
-							else return 0;
-						})
-		},
 		modalTitle() {
 			return this.isEdit ? 'Edit Product' : 'Add New Product';
 		},
@@ -96,6 +89,17 @@ export default {
 					.then(response => {
 						// handle success
 						this.products = response.data.data;
+					})
+					.catch(function (error) {
+						// handle error
+						console.log(error);
+					})
+		},
+		fetchCategories() {
+			axios.get('/category')
+					.then(response => {
+						// handle success
+						this.categories = response.data.data;
 					})
 					.catch(function (error) {
 						// handle error
