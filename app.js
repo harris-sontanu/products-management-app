@@ -22,7 +22,8 @@ export default {
 			},
 			productModal: null,
 			isEdit: false,
-			errors: {}
+			errors: {},
+			removedProductId: null
 		};
 	},
 
@@ -188,9 +189,18 @@ export default {
 		},
 		remove(product) {
 			if (confirm('Are you sure?')) {
-				axios.
-				let index = this.products.findIndex(item => item.id === product.id);
-				this.products.splice(index, 1);
+				axios.delete('/product/' + product.id)
+						.then(() => {
+							this.removedProductId = product.id;
+
+							new Promise(resolve => setTimeout(resolve, 1000))
+								.then(() => {
+									this.removedProductId = null
+									let index = this.products.findIndex(item => item.id === product.id);
+									this.products.splice(index, 1)
+								})
+						})
+				
 			}
 		}
 	},
